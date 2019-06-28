@@ -33,7 +33,7 @@ The first session will provide an introduction to machine learning. We will disc
 
 | Time        | Topic                | Materials                                     |
 |:----------- |:-------------------- |:--------------------------------------------- |
-| 09:00-09:30 | Introductions and course overview | Slides |
+| 09:00-09:30 | Introductions and course overview | [Slides](slides/session-1/slides-recsm-ml-2019-s11.pdf) |
 | 09:30-10:00 | Introduction to machine learning | Slides |
 | 10:00-10:45 | Assessing model accuracy | Slides |
 | 10:45-11:15 | Break | |
