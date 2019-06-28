@@ -36,9 +36,9 @@ The first session will provide an introduction to machine learning. We will disc
 | 09:00-09:30 | Introductions and course overview | Slides |
 | 09:30-10:00 | Introduction to machine learning | Slides |
 | 10:00-10:45 | Assessing model accuracy | Slides |
-| 10:45-11:15 | Break |  |
+| 10:45-11:15 | Break | |
 | 11:15-11:45 | Shrinkage methods I: ridge regression | Slides |
-| 11:45-12:15 | Shrinkage methods II: the lasso       | Slides |
+| 11:45-12:15 | Shrinkage methods II: the lasso | Slides |
 | 12:15-13:00 | Applications of ridge regression and the lasso | Lab Exercise &#124; Lab Solution |
 
 #### Main Readings
@@ -66,10 +66,10 @@ The second session will deal with tree-based methods, which are another importan
 | 09:00-09:30 | Introduction to classification and regression trees | Slides |
 | 09:30-10:00 | Advantages and disadvantages of trees | Slides |
 | 10:00-10:45 | Bagging, random forests | Slides |
-| 10:45-11:15 | Break                   |                                      |
-| 11:15-12:00 | Boosting                | Slides |
+| 10:45-11:15 | Break | |
+| 11:15-12:00 | Boosting | Slides |
 | 12:00-12:30 | Application 1: classification and regression trees | Lab |
-| 12:30-13:00 | Application 2: bagging, random forests, boosting   | Lab |
+| 12:30-13:00 | Application 2: bagging, random forests, boosting | Lab |
 
 #### Main Readings
 
@@ -77,9 +77,10 @@ The second session will deal with tree-based methods, which are another importan
 
 #### Recommended Readings
 
-- Hastie et al., [*The Elements of Statistical Learning*](https://web.stanford.edu/~hastie/ElemStatLearn/), ch. 9, ch. 10, and ch. 15
+- Hastie et al., [*The Elements of Statistical Learning*](https://web.stanford.edu/~hastie/ElemStatLearn/), chs. 9, 10, and 15
 - Shalev-Shwartz and Ben-David, [*Understanding Machine Learning*](http://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/), ch. 18
-- Lantz, *Machine Learning with R*, ch. 5
+- Lantz, *Machine Learning with R*, chs. 5 and 11
+- Provost and Fawcett, *Data Science for Business*, ch. 3
 
 ### Session 3: Unsupervised Learning
 
