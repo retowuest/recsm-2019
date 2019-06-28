@@ -84,7 +84,7 @@ The second session will deal with tree-based methods, which are another importan
 
 ### Session 3: Unsupervised Learning
 
-#### July 4, 2018, 9:00-13:00
+#### July 10, 2019, 9:00-13:00
 
 In the third session, we will move to unsupervised machine learning methods. We will cover two important unsupervised learning techniques: principal components analysis (PCA) and clustering analysis (*K*-means clustering and hierarchical clustering).
 
@@ -92,13 +92,13 @@ In the third session, we will move to unsupervised machine learning methods. We 
 
 | Time        | Topic                | Materials                              |
 |:----------- |:-------------------- |:-------------------------------------- |
-| 09:00-09:30 | Introduction to unsupervised learning | [Slides](slides/slides-recsm-ml-2018-s31.pdf) |
-| 09:30-10:15 | Principal components analysis (PCA) | [Slides](slides/slides-recsm-ml-2018-s32.pdf) |
-| 10:15-10:45 | *K*-means clustering    | [Slides](slides/slides-recsm-ml-2018-s33.pdf) |
-| 10:45-11:15 | Break                   |                                      |
-| 11:15-12:00 | Hierarchical clustering | [Slides](slides/slides-recsm-ml-2018-s34.pdf) |
-| 12:00-12:30 | Application 1: PCA      | [Lab](lab/lab-03a.html) |
-| 12:30-13:00 | Application 2: clustering methods | [Lab](lab/lab-03b.html) |
+| 09:00-09:30 | Introduction to unsupervised learning | Slides |
+| 09:30-10:15 | Principal components analysis (PCA) | Slides |
+| 10:15-10:45 | *K*-means clustering | Slides |
+| 10:45-11:15 | Break | |
+| 11:15-12:00 | Hierarchical clustering | Slides |
+| 12:00-12:30 | Application 1: PCA | Lab |
+| 12:30-13:00 | Application 2: clustering methods | Lab |
 
 #### Main Readings
 
@@ -107,7 +107,8 @@ In the third session, we will move to unsupervised machine learning methods. We 
 #### Recommended Readings
 
 - Hastie et al., [*The Elements of Statistical Learning*](https://web.stanford.edu/~hastie/ElemStatLearn/), ch. 14
-- Shalev-Shwartz and Ben-David, [*Understanding Machine Learning*](http://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/), ch. 22 and ch. 23
+- Shalev-Shwartz and Ben-David, [*Understanding Machine Learning*](http://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/), chs. 22 and 23
 - Bishop, *Pattern Recognition and Machine Learning*, ch. 12
 - Barber, [*Bayesian Reasoning and Machine Learning*](http://web4.cs.ucl.ac.uk/staff/D.Barber/pmwiki/pmwiki.php?n=Brml.HomePage), ch. 15
 - Lantz, *Machine Learning with R*, ch. 9
+- Provost and Fawcett, *Data Science for Business*, ch. 6
