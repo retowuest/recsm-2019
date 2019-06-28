@@ -34,7 +34,7 @@ The first session will provide an introduction to machine learning. We will disc
 | Time        | Topic                | Materials                                     |
 |:----------- |:-------------------- |:--------------------------------------------- |
 | 09:00-09:30 | Introductions and course overview | Slides |
-| 09:30-10:00 | General introduction | Slides |
+| 09:30-10:00 | Introduction to machine learning | Slides |
 | 10:00-10:45 | Assessing model accuracy | Slides |
 | 10:45-11:15 | Break |  |
 | 11:15-11:45 | Shrinkage methods I: ridge regression | Slides |
@@ -43,14 +43,15 @@ The first session will provide an introduction to machine learning. We will disc
 
 #### Main Readings
 
-- James et al., [*An Introduction to Statistical Learning*](http://www-bcf.usc.edu/~gareth/ISL/), ch. 2 (pp. 15-42) and ch. 6 (pp. 214-228)
+- James et al., [*An Introduction to Statistical Learning*](http://www-bcf.usc.edu/~gareth/ISL/), chs. 2 (pp. 15-42) and 6 (pp. 214-228)
 
 #### Recommended Readings
 
 - James et al., [*An Introduction to Statistical Learning*](http://www-bcf.usc.edu/~gareth/ISL/), ch. 5 (pp. 175-186)
-- Hastie et al., [*The Elements of Statistical Learning*](https://web.stanford.edu/~hastie/ElemStatLearn/), ch. 2, ch. 3, and ch. 7
-- Shalev-Shwartz and Ben-David, [*Understanding Machine Learning*](http://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/), ch. 2, ch. 5, and ch. 13
+- Hastie et al., [*The Elements of Statistical Learning*](https://web.stanford.edu/~hastie/ElemStatLearn/), chs. 2, 3, and 7
+- Shalev-Shwartz and Ben-David, [*Understanding Machine Learning*](http://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/), chs. 2, 5, and 13
 - Bishop, *Pattern Recognition and Machine Learning*, ch. 12
+- Provost and Fawcett, *Data Science for Business*, chs. 2 and 5
 
 ### Session 2: Classification and Regression Trees (CART)
 
