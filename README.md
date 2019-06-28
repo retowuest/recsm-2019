@@ -21,11 +21,11 @@ Participants are expected to have a solid understanding of linear and binary reg
 
 ## Schedule
 
-A PDF of the syllabus is available [here](syllabus/syllabus-recsm-ml-2018.pdf).
+A PDF of the syllabus is available [here](syllabus/syllabus-recsm-ml-2019.pdf).
 
 ### Session 1: Introduction to Machine Learning
 
-#### July 2, 2018, 9:00-13:00
+#### July 8, 2019, 9:00-13:00
 
 The first session will provide an introduction to machine learning. We will discuss the goals of machine learning (prediction, inference, or both), the difference between supervised and unsupervised machine learning, the problem of overfitting, and the bias-variance trade-off. We will then get to know a first class of important supervised learning methods, namely shrinkage methods (ridge regression and the lasso).
 
@@ -33,7 +33,7 @@ The first session will provide an introduction to machine learning. We will disc
 
 | Time        | Topic                | Materials                                     |
 |:----------- |:-------------------- |:--------------------------------------------- |
-| 09:00-09:30 | Course overview      | [Slides](slides/slides-recsm-ml-2018-s11.pdf) |
+| 09:00-09:30 | Introductions and course overview | [Slides] |
 | 09:30-10:00 | General introduction | [Slides](slides/slides-recsm-ml-2018-s12.pdf) |
 | 10:00-10:45 | Assessing model accuracy | [Slides](slides/slides-recsm-ml-2018-s13.pdf)       |
 | 10:45-11:15 | Break                |                                                         |
