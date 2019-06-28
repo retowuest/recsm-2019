@@ -55,7 +55,7 @@ The first session will provide an introduction to machine learning. We will disc
 
 ### Session 2: Classification and Regression Trees (CART)
 
-#### July 3, 2018, 9:00-13:00
+#### July 9, 2019, 9:00-13:00
 
 The second session will deal with tree-based methods, which are another important and highly flexible class of supervised learning methods. After an introduction to the basics of decision trees and a general discussion of the advantages and disadvantages of tree-based models, we will look at three specific widely-used tree-based methods: bagging, random forests, and boosting.
 
@@ -63,13 +63,13 @@ The second session will deal with tree-based methods, which are another importan
 
 | Time        | Topic                | Materials                              |
 |:----------- |:-------------------- |:-------------------------------------- |
-| 09:00-09:30 | Introduction to classification and regression trees | [Slides](slides/slides-recsm-ml-2018-s21.pdf) |
-| 09:30-10:00 | Advantages and disadvantages of trees | [Slides](slides/slides-recsm-ml-2018-s22.pdf) |
-| 10:00-10:45 | Bagging, random forests | [Slides](slides/slides-recsm-ml-2018-s23.pdf) |
+| 09:00-09:30 | Introduction to classification and regression trees | Slides |
+| 09:30-10:00 | Advantages and disadvantages of trees | Slides |
+| 10:00-10:45 | Bagging, random forests | Slides |
 | 10:45-11:15 | Break                   |                                      |
-| 11:15-12:00 | Boosting                | [Slides](slides/slides-recsm-ml-2018-s24.pdf) |
-| 12:00-12:30 | Application 1: classification and regression trees | [Lab](lab/lab-02a.html) |
-| 12:30-13:00 | Application 2: bagging, random forests, boosting   | [Lab](lab/lab-02b.html) |
+| 11:15-12:00 | Boosting                | Slides |
+| 12:00-12:30 | Application 1: classification and regression trees | Lab |
+| 12:30-13:00 | Application 2: bagging, random forests, boosting   | Lab |
 
 #### Main Readings
 
