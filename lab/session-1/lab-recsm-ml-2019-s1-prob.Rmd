@@ -124,7 +124,7 @@ c. Use the `plot()` function to create a graph that shows the shrinkage of the c
 ### Problem 1.2
 
 a. Perform cross-validation on the trainig set to choose the optimal tuning parameter $\lambda$. You can do this by using the cross-validation function `cv.glmnet()` in the `glmnet` package. Use the `plot()` function to create a graph that shows the CV estimate of the expected test MSE associated with each value of $\lambda$.
-b. Find the optimal value of $\lambda$. Use the test set to estimate the test error associated with the optimal model.
+b. Find the optimal value of $\lambda$. Use the test set to compute the test error associated with the optimal model.
 c. Re-fit the ridge regression model on the full data set, using the optimal value of $\lambda$.
 
 ## Exercise 2: The Lasso
@@ -134,5 +134,5 @@ The goal of the second exercise is to fit a lasso model to our data.
 ### Problem 2.1
 
 a. Use the training set to fit a lasso model for each $\lambda$ value. You can again use the `glmnet()` function, setting the argument `alpha = 1`. Use the `plot()` function to create a graph that shows the shrinkage of the estimated coefficients as a function of $\lambda$.
-b. Perform cross-validation on the training set to find the optimal value of $\lambda$. Plot the CV error associated with each value of $\lambda$ and use the test set to estimate the test error for the optimal model.
+b. Perform cross-validation on the training set to find the optimal value of $\lambda$. Plot the CV error associated with each value of $\lambda$ and use the test set to compute the test error for the optimal model.
 c. Re-fit the lasso model on the full data set, using the optimal value of $\lambda$.

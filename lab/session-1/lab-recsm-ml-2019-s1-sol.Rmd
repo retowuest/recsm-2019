@@ -173,13 +173,13 @@ We then use the `plot()` function to create a graph that shows the CV estimate o
 plot(ridge_cv_out)
 ```
 
-Next, we determine the optimal value of $\lambda$ and use the test set to estimate the test MSE associated with our optimal model. 
+Next, we determine the optimal value of $\lambda$ and use the test set to compute the test MSE associated with our optimal model. 
 
 ```{r, echo=TRUE}
 # Determine optimal lambda value
 (lambda_opt <- ridge_cv_out$lambda.min)
 
-# Use test set to estimate test error
+# Use test set to compute test error
 ridge_out_pred <- predict(ridge_out, s = lambda_opt, newx = x[-train, ])
 mean((ridge_out_pred - y_test)^2)
 ```
@@ -192,7 +192,7 @@ ridge_out_pred_ls <- predict(ridge_out, s = 0, x = x[train, ], y = y[train],
 mean((ridge_out_pred_ls - y_test)^2)
 ```
 
-For this data set, ridge regression actually increases the test error. In a case like this we might simply use the least squares solution.
+For this data set, ridge regression decreases the test error somewhat relative to least squares.
 
 Finally, we re-fit our ridge regression model on the full data set, using the optimal value of $\lambda$.
 
@@ -238,7 +238,7 @@ lasso_out_pred <- predict(lasso_out, s = lambda_opt, newx = x[-train, ])
 mean((lasso_out_pred - y_test)^2)
 ```
 
-This value is very similar to the test MSE of ridge regression with $\lambda$ chosen by cross-validation.
+We see that the lasso further improves prediction accuracy compared to ridge regression with $\lambda$ chosen by cross-validation.
 
 Finally, we again re-fit our lasso model on the full data set, using the optimal value of $\lambda$.
 

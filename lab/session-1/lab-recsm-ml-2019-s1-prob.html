@@ -455,7 +455,7 @@ y &lt;- bsas_data$imm_brit</code></pre>
 <h3>Problem 1.2</h3>
 <ol style="list-style-type: lower-alpha">
 <li>Perform cross-validation on the trainig set to choose the optimal tuning parameter <span class="math inline">\(\lambda\)</span>. You can do this by using the cross-validation function <code>cv.glmnet()</code> in the <code>glmnet</code> package. Use the <code>plot()</code> function to create a graph that shows the CV estimate of the expected test MSE associated with each value of <span class="math inline">\(\lambda\)</span>.</li>
-<li>Find the optimal value of <span class="math inline">\(\lambda\)</span>. Use the test set to estimate the test error associated with the optimal model.</li>
+<li>Find the optimal value of <span class="math inline">\(\lambda\)</span>. Use the test set to compute the test error associated with the optimal model.</li>
 <li>Re-fit the ridge regression model on the full data set, using the optimal value of <span class="math inline">\(\lambda\)</span>.</li>
 </ol>
 </div>
@@ -467,7 +467,7 @@ y &lt;- bsas_data$imm_brit</code></pre>
 <h3>Problem 2.1</h3>
 <ol style="list-style-type: lower-alpha">
 <li>Use the training set to fit a lasso model for each <span class="math inline">\(\lambda\)</span> value. You can again use the <code>glmnet()</code> function, setting the argument <code>alpha = 1</code>. Use the <code>plot()</code> function to create a graph that shows the shrinkage of the estimated coefficients as a function of <span class="math inline">\(\lambda\)</span>.</li>
-<li>Perform cross-validation on the training set to find the optimal value of <span class="math inline">\(\lambda\)</span>. Plot the CV error associated with each value of <span class="math inline">\(\lambda\)</span> and use the test set to estimate the test error for the optimal model.</li>
+<li>Perform cross-validation on the training set to find the optimal value of <span class="math inline">\(\lambda\)</span>. Plot the CV error associated with each value of <span class="math inline">\(\lambda\)</span> and use the test set to compute the test error for the optimal model.</li>
 <li>Re-fit the lasso model on the full data set, using the optimal value of <span class="math inline">\(\lambda\)</span>.</li>
 </ol>
 </div>
