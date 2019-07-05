@@ -385,7 +385,7 @@ $(document).ready(function () {
 <p>We will use data from the 2009 British Social Attitudes Survey. You can download the data <a href="bsas_short.RData">here</a>. The codebook is available <a href="bsas_doc.pdf">here</a>.</p>
 <p>Our goal is to predict the following output variable (the name in brackets corresponds to the variable name in the codebook):</p>
 <ul>
-<li><strong>imm_brit</strong> [IMMBRIT]: Out of every <span class="math inline">\(100\)</span> people in Britain, how many do you think are immigrants from non-western countries?</li>
+<li><strong>imm_brit</strong> [IMMBRIT]: Out of every <span class="math inline">\(100\)</span> people in Britain, how many do you think are immigrants from non-Western countries?</li>
 </ul>
 <p>We will use the following input variables:</p>
 <ul>
@@ -415,8 +415,7 @@ $(document).ready(function () {
 <div id="data-preparation" class="section level2">
 <h2>Data Preparation</h2>
 <p>The original data set contains 1,044 respondents.</p>
-<pre class="r"><code>library(foreign)
-library(dplyr)
+<pre class="r"><code>library(dplyr)
 
 # Set working directory
 # setwd(...)
@@ -433,7 +432,7 @@ bsas_data &lt;- bsas_data %&gt;%
                 resp_health = factor(resp_health,
                                      levels = 0:3,
                                      labels = c(&quot;bad&quot;, &quot;fair&quot;, &quot;fairly good&quot;, &quot;good&quot;)))</code></pre>
-<p>We will use the <code>glmnet()</code> function in the <code>glmnet</code> package to perform ridge regression and the lasso. Before doing so, we use the <code>model.matrix()</code> function to create a matrix of input variables. This function automatically transforms any qualitative variables into dummy variables. This is important because <code>glmnet()</code> can only take quantitative inputs.</p>
+<p>We will use the <code>glmnet()</code> function in the <code>glmnet</code> package to perform ridge regression and the lasso. Before doing so, we use the <code>model.matrix()</code> function to create a matrix of input variables (also called “design matrix”). This function automatically transforms any qualitative variables into dummy variables. This is important because <code>glmnet()</code> can only take quantitative inputs.</p>
 <p>We remove the intercept from the matrix produced by <code>model.matrix()</code> because <code>glmnet()</code> will automatically include an intercept. We also exclude the input <strong>resp_party_cons</strong>, which will serve as the baseline in our model.</p>
 <pre class="r"><code># Matrix of input variables (remove the intercept and resp_party_cons)
 x &lt;- model.matrix(imm_brit ~ . -1 -resp_party_cons, bsas_data)

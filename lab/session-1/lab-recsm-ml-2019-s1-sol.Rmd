@@ -1,7 +1,7 @@
 ---
 title: "Lab: Ridge Regression and the Lasso"
 author: "Reto Wüest"
-date: "June 29, 2018"
+date: "July 8, 2019"
 output:
   html_document:
     highlight: textmate
@@ -17,7 +17,7 @@ We will use data from the 2009 British Social Attitudes Survey. You can download
 
 Our goal is to predict the following output variable (the name in brackets corresponds to the variable name in the codebook):
 
-- **imm_brit** [IMMBRIT]: Out of every $100$ people in Britain, how many do you think are immigrants from non-western countries?
+- **imm_brit** [IMMBRIT]: Out of every $100$ people in Britain, how many do you think are immigrants from non-Western countries?
 
 We will use the following input variables:
 
@@ -40,7 +40,7 @@ We will use the following input variables:
 - **resp_health** [SRHealth]: Respondent's health
 - **resp_household_income** [HHincome]: Total income of respondent's household
 
-Let's have a look at the distribution of the output variable. The red dashed line shows the true percentage of non-Western immigrants (see [www.migrationwatchuk.org](www.migrationwatchuk.org)).
+Let's have a look at the distribution of the output variable. The red dashed line shows the true percentage of non-Western immigrants (see [www.migrationwatchuk.org](https://www.migrationwatchuk.org)).
 
 ```{r, echo=FALSE, message=FALSE}
 library(foreign)
@@ -80,7 +80,6 @@ The plot shows that 756 of 1,044 respondents (or 72.4\%) overestimate the percen
 The original data set contains 1,044 respondents. 
 
 ```{r, echo=TRUE, message=FALSE}
-library(foreign)
 library(dplyr)
 
 # Set working directory
@@ -100,7 +99,7 @@ bsas_data <- bsas_data %>%
                                      labels = c("bad", "fair", "fairly good", "good")))
 ```
 
-We will use the `glmnet()` function in the `glmnet` package to perform ridge regression and the lasso. Before doing so, we use the `model.matrix()` function to create a matrix of input variables. This function automatically transforms any qualitative variables into dummy variables. This is important because `glmnet()` can only take quantitative inputs.
+We will use the `glmnet()` function in the `glmnet` package to perform ridge regression and the lasso. Before doing so, we use the `model.matrix()` function to create a matrix of input variables (also called "design matrix"). This function automatically transforms any qualitative variables into dummy variables. This is important because `glmnet()` can only take quantitative inputs.
 
 We remove the intercept from the matrix produced by `model.matrix()` because `glmnet()` will automatically include an intercept. We also exclude the input **resp_party_cons**, which will serve as the baseline in our model.
 
@@ -124,7 +123,7 @@ We first split the data into a training set and a test set.
 # Set seed
 set.seed(1234)
 
-# Split data into a training and test set
+# Split data into a training set and a test set
 train <- sample(1:nrow(x), nrow(x) / 2)
 y_test <- y[-train]
 ```
@@ -141,7 +140,7 @@ We then use the training set to fit a ridge regression for each $\lambda$ value.
 ```{r, echo=TRUE, message=FALSE}
 library(glmnet)
 
-# Fit ridge regression models using the glmnet function
+# Fit a ridge regression for each lambda using the glmnet function
 ridge_out <- glmnet(x[train, ], y[train], alpha = 0, lambda = grid)
 ```
 
@@ -185,7 +184,7 @@ ridge_out_pred <- predict(ridge_out, s = lambda_opt, newx = x[-train, ])
 mean((ridge_out_pred - y_test)^2)
 ```
 
-Let's see what the benefit is of performing ridge regression instead of least squares regression.
+Let's see what the benefit is of performing ridge regression rather than least squares regression.
 
 ```{r, echo=TRUE}
 ridge_out_pred_ls <- predict(ridge_out, s = 0, x = x[train, ], y = y[train],
@@ -218,7 +217,7 @@ lasso_out <- glmnet(x[train, ], y[train], alpha = 1, lambda = grid)
 plot(lasso_out, xvar = "lambda", label = TRUE)
 ```
 
-We now perform cross-validation, plot the CV estimate of the expected test MSE for each lambda, and use the test set to compute the test error for the model with the optimal $\lambda$.
+We now perform 5-fold cross-validation, plot the CV estimate of the expected test MSE for each lambda, and use the test set to compute the test error for the model with the optimal $\lambda$.
 
 ```{r, echo=TRUE}
 set.seed(1234)

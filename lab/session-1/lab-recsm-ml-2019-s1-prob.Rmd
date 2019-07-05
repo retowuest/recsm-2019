@@ -17,7 +17,7 @@ We will use data from the 2009 British Social Attitudes Survey. You can download
 
 Our goal is to predict the following output variable (the name in brackets corresponds to the variable name in the codebook):
 
-- **imm_brit** [IMMBRIT]: Out of every $100$ people in Britain, how many do you think are immigrants from non-western countries?
+- **imm_brit** [IMMBRIT]: Out of every $100$ people in Britain, how many do you think are immigrants from non-Western countries?
 
 We will use the following input variables:
 
@@ -80,7 +80,6 @@ The plot shows that 756 of 1,044 respondents (or 72.4\%) overestimate the percen
 The original data set contains 1,044 respondents. 
 
 ```{r, echo=TRUE, message=FALSE}
-library(foreign)
 library(dplyr)
 
 # Set working directory
@@ -100,7 +99,7 @@ bsas_data <- bsas_data %>%
                                      labels = c("bad", "fair", "fairly good", "good")))
 ```
 
-We will use the `glmnet()` function in the `glmnet` package to perform ridge regression and the lasso. Before doing so, we use the `model.matrix()` function to create a matrix of input variables. This function automatically transforms any qualitative variables into dummy variables. This is important because `glmnet()` can only take quantitative inputs.
+We will use the `glmnet()` function in the `glmnet` package to perform ridge regression and the lasso. Before doing so, we use the `model.matrix()` function to create a matrix of input variables (also called "design matrix"). This function automatically transforms any qualitative variables into dummy variables. This is important because `glmnet()` can only take quantitative inputs.
 
 We remove the intercept from the matrix produced by `model.matrix()` because `glmnet()` will automatically include an intercept. We also exclude the input **resp_party_cons**, which will serve as the baseline in our model.
 
