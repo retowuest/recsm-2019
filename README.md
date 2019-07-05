@@ -34,12 +34,12 @@ The first session will provide an introduction to machine learning. We will disc
 | Time        | Topic                | Materials                                     |
 |:----------- |:-------------------- |:--------------------------------------------- |
 | 09:00-09:30 | Introductions and course overview | [Slides](slides/session-1/slides-recsm-ml-2019-s11.pdf) |
-| 09:30-10:00 | Introduction to machine learning | Slides |
-| 10:00-10:45 | Supervised learning and model accuracy | Slides |
+| 09:30-10:00 | Introduction to machine learning | [Slides](slides/session-1/slides-recsm-ml-2019-s12.pdf) |
+| 10:00-10:45 | Supervised learning and model accuracy | [Slides](slides/session-1/slides-recsm-ml-2019-s13.pdf) |
 | 10:45-11:15 | Break | |
-| 11:15-11:45 | Shrinkage methods I: ridge regression | Slides |
-| 11:45-12:15 | Shrinkage methods II: the lasso | Slides |
-| 12:15-13:00 | Applications of ridge regression and the lasso | Lab Exercise &#124; Lab Solution |
+| 11:15-11:45 | Shrinkage methods I: ridge regression | [Slides](slides/session-1/slides-recsm-ml-2019-s14.pdf) |
+| 11:45-12:15 | Shrinkage methods II: the lasso | [Slides](slides/session-1/slides-recsm-ml-2019-s15.pdf) |
+| 12:15-13:00 | Applications of ridge regression and the lasso | [Lab Exercise](lab/lab-recsm-ml-2019-s1-prob.html) &#124; [Lab Solution](lab/lab-recsm-ml-2019-s1-sol.html) |
 
 #### Main Readings
 

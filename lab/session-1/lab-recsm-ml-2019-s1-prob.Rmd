@@ -40,7 +40,7 @@ We will use the following input variables:
 - **resp_health** [SRHealth]: Respondent's health
 - **resp_household_income** [HHincome]: Total income of respondent's household
 
-Let's have a look at the distribution of the output variable. The red dashed line shows the true percentage of non-Western immigrants (see [www.migrationwatchuk.org](www.migrationwatchuk.org)).
+Let's have a look at the distribution of the output variable. The red dashed line shows the true percentage of non-Western immigrants (see [www.migrationwatchuk.org](https://www.migrationwatchuk.org)).
 
 ```{r, echo=FALSE, message=FALSE}
 library(foreign)
