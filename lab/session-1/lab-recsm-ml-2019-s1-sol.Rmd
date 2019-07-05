@@ -238,7 +238,7 @@ lasso_out_pred <- predict(lasso_out, s = lambda_opt, newx = x[-train, ])
 mean((lasso_out_pred - y_test)^2)
 ```
 
-We see that the lasso further improves prediction accuracy compared to ridge regression with $\lambda$ chosen by cross-validation.
+We see that the lasso further improves prediction accuracy compared to ridge regression with $\lambda$ chosen by cross-validation. In addition, the lasso has the advantage that it sets some coefficient estimates exactly to 0, thus producing a more interpretable model than ridge regression.
 
 Finally, we again re-fit our lasso model on the full data set, using the optimal value of $\lambda$.
 

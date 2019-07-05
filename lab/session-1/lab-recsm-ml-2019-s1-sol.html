@@ -550,7 +550,7 @@ lasso_out_pred &lt;- predict(lasso_out, s = lambda_opt, newx = x[-train, ])
 # Test error
 mean((lasso_out_pred - y_test)^2)</code></pre>
 <pre><code>## [1] 372.4453</code></pre>
-<p>We see that the lasso further improves prediction accuracy compared to ridge regression with <span class="math inline">\(\lambda\)</span> chosen by cross-validation.</p>
+<p>We see that the lasso further improves prediction accuracy compared to ridge regression with <span class="math inline">\(\lambda\)</span> chosen by cross-validation. In addition, the lasso has the advantage that it sets some coefficient estimates exactly to 0, thus producing a more interpretable model than ridge regression.</p>
 <p>Finally, we again re-fit our lasso model on the full data set, using the optimal value of <span class="math inline">\(\lambda\)</span>.</p>
 <pre class="r"><code>lasso_final &lt;- glmnet(x, y, alpha = 1)
 predict(lasso_final, type = &quot;coefficients&quot;, s = lambda_opt)[1:23, ]</code></pre>
