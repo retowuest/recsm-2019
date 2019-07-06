@@ -63,13 +63,13 @@ The second session will deal with tree-based methods, which are another importan
 
 | Time        | Topic                | Materials                              |
 |:----------- |:-------------------- |:-------------------------------------- |
-| 09:00-09:30 | Introduction to classification and regression trees | Slides |
-| 09:30-10:00 | Advantages and disadvantages of trees | Slides |
-| 10:00-10:45 | Bagging, random forests | Slides |
+| 09:00-09:30 | Introduction to classification and regression trees | [Slides](slides/session-2/slides-recsm-ml-2019-s21.pdf) |
+| 09:30-10:00 | Advantages and disadvantages of trees | [Slides](slides/session-2/slides-recsm-ml-2019-s22.pdf) |
+| 10:00-10:45 | Bagging, random forests | [Slides](slides/session-2/slides-recsm-ml-2019-s23.pdf) |
 | 10:45-11:15 | Break | |
-| 11:15-12:00 | Boosting | Slides |
-| 12:00-12:30 | Application 1: classification and regression trees | Lab |
-| 12:30-13:00 | Application 2: bagging, random forests, boosting | Lab |
+| 11:15-12:00 | Boosting | [Slides](slides/session-2/slides-recsm-ml-2019-s24.pdf) |
+| 12:00-12:30 | Application 1: classification and regression trees | [Lab](lab/session-2/lab-02a.html) |
+| 12:30-13:00 | Application 2: bagging, random forests, boosting | [Lab](lab/session-2/lab-02b.html) |
 
 #### Main Readings
 
