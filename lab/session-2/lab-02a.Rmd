@@ -1,0 +1,204 @@
+---
+title: "Regression and Classification Trees"
+author: "Reto Wüest"
+date: "July 03, 2018"
+output:
+  html_document:
+    highlight: textmate
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Data
+
+We will use data from the post-election survey of the 2005 British Election Study (BES). You can download the data [here](bes_2005.RData). For more information on the BES, please visit <http://www.britishelectionstudy.com/>.
+
+Our data set includes the following variables:
+
+- **vote_2005**: Respondent voted in the 2005 general election
+- **vote_2001**: Respondent voted in the 2001 general election
+- **female**: Respondent is female
+- **party_id**: Respondent thinks of himself/herself as being a supporter of a particular party
+- **phone**: There is a telephone in the respondent's accommodation
+- **education**: Age at which respondent finished his/her full-time education
+    - 1: 15 or younger
+    - 2: 16
+    - 3: 17
+    - 4: 18
+    - 5: 19 or older
+    - 6: Still at school in full-time education
+    - 7: Still at university in full-time education
+- **duty**: Extent to which respondent agrees that it is every citizen's duty to vote in an election
+    - 1: Strongly agrees
+    - 2: Agrees
+    - 3: Neither agrees nor disagrees
+    - 4: Disagrees
+    - 5: Strongly disagrees
+- **household_income**: Total income of respondent's household from all sources before tax
+
+
+## Classification Trees
+
+Our goal is to predict voter turnout in the 2005 British general election. We use the `tree()` function from the `tree` package to build a classification tree. The `summary()` function lists the variables that are used as internal nodes in the tree, the number of terminal nodes, and the (training) error rate. We see that the training error rate is 18.6%.
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+library(tree)
+
+# Load data set
+load("bes_2005.RData")
+
+# Build a classification tree
+tree_1 <- tree(vote_2005 ~ . -household_income, data = bes_2005)
+summary(tree_1)
+```
+
+We can use the `plot()` function to graphically display the tree structure, and the `text()` function to display the node labels. The argument `pretty = 0` instructs `R` to include the category names for qualitative predictors, rather than simply displaying a letter for each category.
+
+```{r, echo=TRUE}
+# Graphically display the tree
+plot(tree_1)
+text(tree_1, pretty = 0)
+```
+
+If we type the name of the tree object, `R` prints output corresponding to each branch of the tree. `R` displays the split criterion, the number of observations in that branch, the deviance, the overall prediction for the branch (Yes or No), and the fraction of observations in that branch that take on the value of Yes and No, respectively. Branches that lead to terminal nodes are by an asterisk.
+
+```{r, echo=TRUE}
+# Examine the tree object
+tree_1
+```
+
+In order to evaluate the performance of the classification tree, we must estimate the test error rather than simply computing the training error. We split the observations into a training set and a test set, build the tree using the training set, and evaluate its performance on the test data.
+
+```{r, echo=TRUE}
+set.seed(1234)
+
+# Create training and test sets
+train <- sample(1:nrow(bes_2005), size = as.integer(nrow(bes_2005) / 2))
+bes_2005_test <- bes_2005[-train, ]
+vote_2005_test <- bes_2005$vote_2005[-train]
+
+# Grow tree on training data
+tree_2 <- tree(vote_2005 ~ . , data = bes_2005, subset = train)
+```
+
+We can use the `predict()` function to predict outcomes.
+
+```{r, echo=TRUE}
+# Predict outcomes
+tree_2_pred <- predict(tree_2, newdata = bes_2005_test, type = "class")
+
+# Confusion matrix
+table(prediction = tree_2_pred, truth = vote_2005_test)
+```
+
+We correctly classify approximately 80% of the observations in the test data set.
+
+```{r, echo=TRUE}
+# Percent correctly classified
+mean(tree_2_pred == vote_2005_test)
+```
+
+Next, we use cost-complexity pruning to see if we can simplify the tree and thus decrease variance without increasing bias. We use k-fold cross-validation to determine the optimal size of the tree.
+
+```{r, echo=TRUE}
+set.seed(1234)
+cv_tree_2 <- cv.tree(tree_2, FUN = prune.misclass)
+
+# Illustrate
+par(mfrow = c(1, 2))
+plot(cv_tree_2$size, cv_tree_2$dev, type = "b")
+plot(cv_tree_2$k, cv_tree_2$dev, type = "b")
+```
+
+The tree can be pruned to four terminal nodes. We use the `prune.misclass()` function to prune the tree.
+
+```{r, echo=TRUE}
+prune_tree_2 <- prune.misclass(tree_2, best = 4)
+par(mfrow = c(1, 1))
+plot(prune_tree_2)
+text(prune_tree_2, pretty = 0)
+```
+
+How well does this pruned tree perform on the test data set? Once again, we apply the `predict()` function.
+
+```{r, echo=TRUE}
+# Predict outcomes
+prune_tree_2_pred <- predict(prune_tree_2, newdata = bes_2005_test, type = "class")
+
+# Confusion matrix
+table(prediction = prune_tree_2_pred, truth = vote_2005_test)
+```
+
+Now, 80.2% of the test observations are correctly classified, so the pruning process slightly improved the classification accuracy.
+
+```{r, echo=TRUE}
+# Percent correctly classified
+mean(prune_tree_2_pred == vote_2005_test)
+```
+
+
+## Regression Trees
+
+Here our goal is to predict the household income of respondents. To do so, we build a regression tree.
+
+```{r, echo=TRUE}
+# Build a regression tree
+tree_3 <- tree(household_income ~ ., data = bes_2005, subset = train)
+summary(tree_3)
+```
+
+We again use the `plot()` function to plot the tree.
+
+```{r, echo=TRUE}
+# Graphically display the tree
+plot(tree_3)
+text(tree_3, pretty = 0)
+```
+
+We estimate the test error of the regression tree.
+
+```{r, echo=TRUE}
+# Predict outcomes
+tree_3_pred <- predict(tree_3, newdata = bes_2005_test)
+
+# MSE
+household_income_test <- bes_2005$household_income[-train]
+mean((tree_3_pred - household_income_test)^2)
+```
+
+Now we use the `cv.tree()` function to see whether pruning the tree will improve performance.
+
+```{r, echo=TRUE}
+cv_tree_3 <- cv.tree(tree_3)
+
+# Illustrate
+plot(cv_tree_3$size, cv_tree_3$dev, type = "b")
+```
+
+The tree with 3 terminal nodes results in the lowest cross-validation error rate. We apply the `prune.misclass()` function in order to prune the tree to obtain the 3-node tree.
+
+```{r, echo=TRUE}
+prune_tree_3 <- prune.tree(tree_3, best = 3)
+plot(prune_tree_3)
+text(prune_tree_3, pretty = 0)
+```
+
+Once again, we use the `predict()` function to see how well the pruned tree performs on the test data set.
+
+```{r, echo=TRUE}
+# Predict outcomes
+prune_tree_3_pred <- predict(prune_tree_3, newdata = bes_2005_test)
+
+# MSE
+mean((prune_tree_3_pred - household_income_test)^2)
+```
+
+We decreased the MSE by 12.1%.
+
+```{r, echo=TRUE}
+(10.61289 - 9.332945) / 10.61289
+```
+

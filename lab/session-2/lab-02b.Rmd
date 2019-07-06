@@ -1,0 +1,107 @@
+---
+title: "Bagging, Random forests, Boosting"
+author: "Reto Wüest"
+date: "July 03, 2018"
+output:
+  html_document:
+    highlight: textmate
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Bagging
+
+Here we apply bagging to the 2005 BES survey data, using the `randomForest` package in `R`. Recall that bagging is a special case of a random forest with $m = p$. Therefore, the `randomForest()` function can be used to perform both random forests and bagging. We perform bagging as follows:
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+library(randomForest)
+
+# Load data set
+load("bes_2005.RData")
+
+# Create training and test sets
+set.seed(1234)
+train <- sample(1:nrow(bes_2005), size = as.integer(nrow(bes_2005) / 2))
+bes_2005_test <- bes_2005[-train, ]
+vote_2005_test <- bes_2005$vote_2005[-train]
+
+# Bagging
+set.seed(1234)
+bag_1 <- randomForest(household_income ~ ., data = bes_2005, subset = train,
+                      mtry = 7, importance = TRUE)
+bag_1
+```
+
+Note that the argument `mtry = 7` indicates that all 7 predictors should be considered for each split of the tree---in other words, that bagging should be done. How well does this bagged model perform on the test set?
+
+```{r, echo=TRUE}
+# Predict outcomes
+bag_1_pred <- predict(bag_1, newdata = bes_2005_test)
+
+# MSE
+household_income_test <- bes_2005$household_income[-train]
+mean((bag_1_pred - household_income_test)^2)
+```
+
+## Random Forest
+
+Growing a random forest proceeds in exactly the same way, except that we use a smaller value of the `mtry` argument. By default, `randomForest()` uses $p/3$ variables when building a random forest of regression trees, and $\sqrt{p}$ variables when building a random forest of classification trees. Here we use `mtry = 3`.
+
+```{r, echo=TRUE}
+# Random forest
+set.seed(1234)
+rf_1 <- randomForest(household_income ~ ., data = bes_2005, subset = train,
+                     mtry = 3, importance = TRUE)
+
+# Predict outcomes
+rf_1_pred <- predict(rf_1, newdata = bes_2005_test)
+
+# MSE
+mean((rf_1_pred - household_income_test)^2)
+```
+
+The test set MSE is 10.49. This indicates that random forests yielded an improvement over bagging in this case. Using the `importance()` and `varImpPlot()` functions, we can view the importance of each variable.
+
+```{r, echo=TRUE}
+# Variable importance
+importance(rf_1)
+
+# Variable importance plot
+varImpPlot(rf_1, main = "Variable Importance Plot")
+```
+
+
+## Boosting
+
+We use the `gbm()` function from the `gbm` package to fit boosted regression trees to the 2005 BES survey data. We run `gbm()` with the option `distribution = "gaussian"` since this is a regression problem. If it were a binary classification problem, we would use `distribution = "bernoulli"`. The argument `n.trees = 5000` indicates that we want 5000 trees, and the option `interaction.depth = 4` limits the depth of each tree. Note that the learning rate is related to the tree size: when the learning rate is smaller, we need more trees. The `summary()` function produces a relative influence plot and also outputs the relative influence statistics.
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+library(gbm)
+
+# Boosting
+set.seed(1234)
+
+boost_1 <- gbm(household_income ~ ., data = bes_2005[train, ], 
+               distribution = "gaussian", 
+               n.trees = 5000, 
+               interaction.depth = 4,
+               shrinkage = 0.001)
+
+summary(boost_1)
+```
+
+We now use the boosted model to predict household income on the test set:
+
+```{r, echo=TRUE}
+# Predict outcomes
+boost_1_pred <- predict(boost_1, newdata = bes_2005_test, n.trees = 5000)
+
+# MSE
+mean((boost_1_pred - household_income_test)^2)
+```
+
+The test MSE obtained is 9.84; superior to both the test MSE for random forests and that for bagging.
+
