@@ -5,6 +5,7 @@ date: "July 9, 2019"
 output:
   html_document:
     highlight: textmate
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -63,7 +64,7 @@ plot(tree_1)
 text(tree_1, pretty = 0)
 ```
 
-If we type the name of the tree object, `R` prints output corresponding to each branch of the tree. `R` displays the split criterion, the number of observations in that branch, the deviance, the overall prediction for the branch (Yes or No), and the fraction of observations in that branch that take on the value of Yes and No, respectively. Branches that lead to terminal nodes are by an asterisk.
+If we type the name of the tree object, `R` prints output corresponding to each branch of the tree. `R` displays the split criterion, the number of observations in that branch, the deviance, the overall prediction for the branch (Yes or No), and the fraction of observations in that branch that take on the value of Yes and No, respectively. Branches that lead to terminal nodes are indicated by an asterisk.
 
 ```{r, echo=TRUE}
 # Examine the tree object
@@ -76,7 +77,7 @@ In order to evaluate the performance of the classification tree, we must estimat
 set.seed(1234)
 
 # Create training and test sets
-train <- sample(1:nrow(bes_2005), size = as.integer(nrow(bes_2005) / 2))
+train <- sample(1:nrow(bes_2005), size = nrow(bes_2005) / 2)
 bes_2005_test <- bes_2005[-train, ]
 vote_2005_test <- bes_2005$vote_2005[-train]
 
@@ -84,7 +85,7 @@ vote_2005_test <- bes_2005$vote_2005[-train]
 tree_2 <- tree(vote_2005 ~ . , data = bes_2005, subset = train)
 ```
 
-We can use the `predict()` function to predict outcomes.
+We can use the `predict()` function to predict outcomes. Note that the argument `type = "class"` instructs `R` to return the actual class prediction.
 
 ```{r, echo=TRUE}
 # Predict outcomes
@@ -94,17 +95,16 @@ tree_2_pred <- predict(tree_2, newdata = bes_2005_test, type = "class")
 table(prediction = tree_2_pred, truth = vote_2005_test)
 ```
 
-We correctly classify approximately 80% of the observations in the test data set.
+We correctly classify about 78.9% of the observations in the test data set.
 
 ```{r, echo=TRUE}
 # Percent correctly classified
 mean(tree_2_pred == vote_2005_test)
 ```
 
-Next, we use cost-complexity pruning to see if we can simplify the tree and thus decrease variance without increasing bias. We use k-fold cross-validation to determine the optimal size of the tree.
+Next, we use cost-complexity pruning to see if we can simplify the tree and decrease variance without increasing bias too much. The function `cv.tree()` performs cross-validation in order to determine the optimal level of tree complexity; cost complexity pruning is used in order to select a sequence of trees for consideration. We then plot the cross-validation error against the number of terminal nodes of each tree (`size`) as well as the value of the cost-complexity parameter (`k`, which corresponds to $\alpha$ in (2.1.2) in the slides.)
 
 ```{r, echo=TRUE}
-set.seed(1234)
 cv_tree_2 <- cv.tree(tree_2, FUN = prune.misclass)
 
 # Illustrate
@@ -132,7 +132,7 @@ prune_tree_2_pred <- predict(prune_tree_2, newdata = bes_2005_test, type = "clas
 table(prediction = prune_tree_2_pred, truth = vote_2005_test)
 ```
 
-Now, 80.2% of the test observations are correctly classified, so the pruning process slightly improved the classification accuracy.
+Again, 78.9% of the test observations are correctly classified, so the pruning process has not improved classification accuracy.
 
 ```{r, echo=TRUE}
 # Percent correctly classified
@@ -178,7 +178,7 @@ cv_tree_3 <- cv.tree(tree_3)
 plot(cv_tree_3$size, cv_tree_3$dev, type = "b")
 ```
 
-The tree with 3 terminal nodes results in the lowest cross-validation error rate. We apply the `prune.misclass()` function in order to prune the tree to obtain the 3-node tree.
+The tree with 3 terminal nodes has the lowest cross-validation error. We apply the `prune.misclass()` function in order to prune the tree to obtain the 3-node tree.
 
 ```{r, echo=TRUE}
 prune_tree_3 <- prune.tree(tree_3, best = 3)
@@ -196,9 +196,9 @@ prune_tree_3_pred <- predict(prune_tree_3, newdata = bes_2005_test)
 mean((prune_tree_3_pred - household_income_test)^2)
 ```
 
-We decreased the MSE by 12.1%.
+We slightly decreased the MSE by about 1.6%.
 
 ```{r, echo=TRUE}
-(10.61289 - 9.332945) / 10.61289
+(8.769241 - 8.63068) / 8.769241
 ```
 
