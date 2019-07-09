@@ -1,7 +1,7 @@
 ---
 title: "Bagging, Random forests, Boosting"
 author: "Reto Wüest"
-date: "July 03, 2018"
+date: "July 9, 2019"
 output:
   html_document:
     highlight: textmate
@@ -24,12 +24,10 @@ load("bes_2005.RData")
 
 # Create training and test sets
 set.seed(1234)
-train <- sample(1:nrow(bes_2005), size = as.integer(nrow(bes_2005) / 2))
+train <- sample(1:nrow(bes_2005), size = nrow(bes_2005) / 2)
 bes_2005_test <- bes_2005[-train, ]
-vote_2005_test <- bes_2005$vote_2005[-train]
 
 # Bagging
-set.seed(1234)
 bag_1 <- randomForest(household_income ~ ., data = bes_2005, subset = train,
                       mtry = 7, importance = TRUE)
 bag_1
@@ -52,7 +50,6 @@ Growing a random forest proceeds in exactly the same way, except that we use a s
 
 ```{r, echo=TRUE}
 # Random forest
-set.seed(1234)
 rf_1 <- randomForest(household_income ~ ., data = bes_2005, subset = train,
                      mtry = 3, importance = TRUE)
 
@@ -63,7 +60,7 @@ rf_1_pred <- predict(rf_1, newdata = bes_2005_test)
 mean((rf_1_pred - household_income_test)^2)
 ```
 
-The test set MSE is 10.49. This indicates that random forests yielded an improvement over bagging in this case. Using the `importance()` and `varImpPlot()` functions, we can view the importance of each variable.
+The test set MSE is 8.67. This indicates that random forests yielded an improvement over bagging in this case. Using the `importance()` and `varImpPlot()` functions, we can view the importance of each variable.
 
 ```{r, echo=TRUE}
 # Variable importance
