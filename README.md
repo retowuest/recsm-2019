@@ -92,11 +92,11 @@ In the third session, we will move to unsupervised machine learning methods. We 
 
 | Time        | Topic                | Materials                              |
 |:----------- |:-------------------- |:-------------------------------------- |
-| 09:00-09:30 | Introduction to unsupervised learning | Slides |
-| 09:30-10:15 | Principal components analysis (PCA) | Slides |
-| 10:15-10:45 | *K*-means clustering | Slides |
+| 09:00-09:30 | Introduction to unsupervised learning | [Slides](slides/session-3/slides-recsm-ml-2019-s31.pdf) |
+| 09:30-10:15 | Principal components analysis (PCA) | [Slides](slides/session-3/slides-recsm-ml-2019-s32.pdf) |
+| 10:15-10:45 | *K*-means clustering | [Slides](slides/session-3/slides-recsm-ml-2019-s33.pdf) |
 | 10:45-11:15 | Break | |
-| 11:15-12:00 | Hierarchical clustering | Slides |
+| 11:15-12:00 | Hierarchical clustering | [Slides](slides/session-3/slides-recsm-ml-2019-s34.pdf) |
 | 12:00-12:30 | Application 1: PCA | Lab |
 | 12:30-13:00 | Application 2: clustering methods | Lab |
 
