@@ -1,0 +1,121 @@
+---
+title: "Lab 1: Principal Components Analysis (PCA)"
+author: "Reto Wüest"
+date: "July 10, 2019"
+output:
+  html_document:
+    highlight: textmate
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This exercise is based on James et al. 2013, chapter 10.4.
+
+## Data
+
+We load data on violent crimes by state in the US. The data set is included in the `MASS` package.
+
+```{r, echo=TRUE}
+# Load data on violent crimes by US state
+library(MASS)
+
+head(USArrests)
+```
+
+```{r, echo=TRUE}
+# Create a variable for US states
+states <- row.names(USArrests)
+states
+```
+
+```{r, echo=TRUE}
+# Mean and variance of features in the data set
+apply(USArrests, 2, mean)
+apply(USArrests, 2, var)
+```
+
+## PCA
+
+Principal Components Analysis (PCA) is a dimension reduction method. We run PCA on the data to capture some underlying measure of violence. To run PCA we use the `prcomp()` function.
+
+```{r, echo=TRUE}
+# Run PCA
+pca_out <- prcomp(USArrests, center = TRUE, scale = TRUE)
+
+# Check model object
+names(pca_out)
+```
+
+We can check the mean and standard deviation of the features before centering and scaling.
+
+```{r, echo=TRUE}
+pca_out$center
+pca_out$scale
+```
+
+We can access the loadings of the principal components as follows.
+
+```{r, echo=TRUE}
+pca_out$rotation
+```
+
+Similary, we can access the scores of the principal components as follows.
+
+```{r, echo=TRUE}
+dim(pca_out$x)
+head(pca_out$x)
+```
+
+We can create a biplot showing the loading vectors and principal component scores (The `scale = 0` argument to `biplot()` ensures that the arrows are scaled to represent the loadings). We can also examine the effect of rotation.
+
+```{r, echo=TRUE}
+biplot(pca_out, scale = 0, cex = .8)
+```
+
+```{r, echo=TRUE}
+# Turning things around
+pca_out$rotation <- -pca_out$rotation
+pca_out$x <- -pca_out$x
+biplot(pca_out, scale = 0, cex = .8)
+```
+
+We are really interested in how much of the variance in the data our components capture. So we get the standard deviation on the new scales and compute the variance. We can then evaluate how much of the total variance is explained by each individual principal component.
+
+```{r, echo=TRUE}
+# Standard deviation on new scales
+pca_out$sdev
+
+# Compute variance
+pca_var <- pca_out$sdev^2
+pca_var
+
+# Proportion of variance explained by each principal component
+pve <- pca_var / sum(pca_var)
+pve
+```
+
+We can plot the proportion of variance explained (PVE) by each component. The purpose is to determine how many components we need to account for most of the variance in the data set. It is common to look for an "elbow" (although this is not a disciplined approach).
+
+```{r, echo=TRUE}
+# Finding the ellbow
+plot(pve, xlab = "Principal Component", 
+ylab = "Proportion of Variance Explained ", 
+ylim = c(0, 1), type = "b")
+```
+
+We can also plot the cumulative proportion of variance explained. To do so, we use the `cumsum()` function, which returns the cumulative sums of a vector.
+
+```{r, echo=TRUE}
+# Function to compute cumulative sums
+a <- c(1, 2, 8, -3)
+cumsum(a)
+```
+
+```{r, echo=TRUE}
+# What is the cumulative proportion of variance explained by principal components?
+plot(cumsum(pve), xlab = "Principal Component ",
+ylab = " Cumulative Proportion of Variance Explained ", 
+ylim = c(0, 1), type = "b")
+```

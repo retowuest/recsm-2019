@@ -1,0 +1,145 @@
+---
+title: "Lab 2: Clustering"
+author: "Reto Wüest"
+date: "July 10, 2019"
+output:
+  html_document:
+    highlight: textmate
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This exercise is based on James et al. 2013, chapter 10.5.
+
+## *K*-Means Clustering
+
+We start with *K*-means clustering. We try to dermine whether there are groups of similar observations in our data. We need to decide ex-ante how many clusters we are looking for.
+
+We first create some fake data and visualize it.
+
+```{r, echo=TRUE}
+set.seed(2)
+
+# Fake data: 2 columns of 50 obs from standard normal
+x <- matrix(rnorm(50 * 2), ncol = 2)
+
+# Adding a systematic offset to first half of col 1 and 2
+x[1:25, 1] <- x[1:25, 1] + 3  # offset by 3
+x[1:25, 2] <- x[1:25, 2] - 4  # offset by -4
+
+# Visualize the data
+plot(x, pch = 16, bty = "n")
+```
+
+In the plot we can see the two groups. We perfom *K*-means clustering with the `kmeans()` function. The first argument is the data, the second the number of clusters, and the third the number of times we try clustering using different starting points (clusters might depend on the starting values as the algorithm can only garantuee a local optimum).
+
+We also check the cluster assignment for each observation and color the dots in our plot according to which cluster it has been assigned to.
+
+```{r, echo=TRUE}
+# Run K-means clustering
+km_out <- kmeans(x, 2, nstart = 20)
+
+# For each observation what cluster has it been assigned to?
+km_out$cluster
+```
+
+```{r, echo=TRUE}
+# How are the observations clustered?
+plot(x, col = (km_out$cluster + 1),  # plus because the first color is black 
+main = "K-Means Clustering Results with K = 2", 
+xlab = "", ylab = "", pch = 20, cex = 2, bty = "n")
+```
+
+This looks good, but might there be three groups? We do *K*-means clustering with `K = 3` and inspect the results.
+
+```{r, echo=TRUE}
+# K = 3
+set.seed(4)
+km_out_2 <- kmeans(x, 3, nstart = 20)
+km_out_2
+```
+
+```{r, echo=TRUE}
+# Visualize again cluster assignment
+plot(x, col = (km_out_2$cluster + 1), 
+main = "K-Means Clustering Results with K = 3", 
+xlab = "", ylab = "", pch = 20, cex = 2)
+```
+
+We can check what happens when we do not use enough randomly assigned starting points. We could end up with a solution that is far from optimal.
+
+```{r, echo=TRUE}
+# Set nstart large enough
+set.seed(3)
+
+km_out_3 <- kmeans(x, 3, nstart = 1)
+km_out_3$tot.withinss  # this is the total within-cluster sum of squares, which we seek to minimize by performing K-means clustering
+
+km_out_4 <- kmeans(x, 3, nstart = 20)
+km_out_4$tot.withinss
+```
+
+## Hierarchical Clustering
+
+We now move to hierachical clustering where we do not pre-set the number of clusters. We use the function `hclust()`. We need to specify whether we want to cluster according to distance or correlation and we need to specify a linkage.
+
+```{r, echo=TRUE}
+# Run clustering
+hc_complete <- hclust(dist(x), method = "complete")
+hc_average <- hclust(dist(x), method = "average")
+hc_single <- hclust(dist(x), method = "single")
+```
+
+The choice of the method is consequential, as we end up with different clusterings. The most common choice is "complete" or "average"" which tends to produce more balanced dendrograms.
+
+```{r, echo=TRUE}
+# Complete (maximum distance)
+par(mfrow = c(1, 3))
+plot(hc_complete, main = "Complete Linkage", 
+xlab = "", sub = "", cex = 0.9)
+
+# Average
+plot(hc_average, main = "Average Linkage", 
+xlab = "", sub = "", cex = 0.9)
+
+# Mimimum distance
+plot(hc_single, main = "Single Linkage", 
+xlab = "", sub = "", cex = 0.9)
+```
+
+Based on these dendrograms we have to decide how many clusters make sense in the data. This may be quite difficult without substantial knowledge. We can check cluster assignment given an amount of clusters that we specify with the `cutree()` function.
+
+```{r, echo=TRUE}
+# Cluster assignment for 2 clusters
+cutree(hc_complete, 2)
+
+cutree(hc_average, 2)
+
+cutree(hc_single, 2)
+
+# Cluster assignment for 4 clusters
+cutree(hc_single, 4)
+```
+
+Just like with *K*-nearest neighbors, distance based clustering suffers when the variables are measured on different scales. Therefore, we scale our variables and cluster again.
+
+```{r, echo=TRUE}
+# Scaling to get variable on the same scale
+xsc <- scale(x)
+par(mfrow = c(1,1) )
+plot(hclust(dist(xsc), method = "complete"), 
+main = "Hierarchical Clustering with Scaled Features ")
+```
+
+Instead of using distance as our similarity measure, we could use correlation. This makes sense when we are interested to uncover common trends.
+
+```{r, echo=TRUE}
+# Use different similarity measure
+x <- matrix(rnorm(30 * 3), ncol = 3)  # new fake data
+dd <- as.dist(1 - cor(t(x)))
+plot(hclust(dd, method = "complete"), 
+main = "Complete Linkage with Correlation-Based Distance", 
+xlab = "", sub = "")
+```
